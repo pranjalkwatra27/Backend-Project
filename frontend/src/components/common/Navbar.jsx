@@ -16,7 +16,7 @@ import {
   ChevronDown,
   Sparkles,
 } from 'lucide-react';
-import { KuvoraLogo } from './KuvoraLogo';
+import { CandidexLogo } from './CandidexLogo';
 
 export const Navbar = () => {
   const { user, logout, demoLogin } = useAuth();
@@ -87,7 +87,7 @@ export const Navbar = () => {
           {/* Logo & Brand */}
           <div className="flex items-center gap-8">
             <Link to="/" className="flex items-center group">
-              <KuvoraLogo size="md" />
+              <CandidexLogo size="md" />
             </Link>
 
             {/* Desktop Navigation Links */}

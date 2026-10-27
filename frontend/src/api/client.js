@@ -3,7 +3,10 @@
 const API_BASE = '/api';
 
 export const apiClient = async (endpoint, options = {}) => {
-  const token = localStorage.getItem('kuvora_token') || localStorage.getItem('talentpulse_token');
+  const token =
+    localStorage.getItem('candidex_token') ||
+    localStorage.getItem('kuvora_token') ||
+    localStorage.getItem('talentpulse_token');
 
   const headers = {
     ...options.headers,

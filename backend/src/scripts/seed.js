@@ -39,7 +39,7 @@ const seedDatabase = async () => {
     // 1. Admin User
     const adminUser = await User.create({
       name: 'Alex Vance (Platform Admin)',
-      email: 'alex.admin@kuvora.demo',
+      email: 'alex.admin@candidex.demo',
       passwordHash: defaultPassword,
       role: 'admin',
     });
@@ -423,7 +423,7 @@ const seedDatabase = async () => {
     console.log('Demo Credentials for Testing:');
     console.log('  Candidate:  david.candidate@gmail.demo   /  Password123!');
     console.log('  Recruiter:  sarah.recruiter@stripe.demo  /  Password123!');
-    console.log('  Admin:      alex.admin@kuvora.demo  /  Password123!');
+    console.log('  Admin:      alex.admin@candidex.demo  /  Password123!');
     console.log('------------------------------------------------------------');
 
     process.exit(0);

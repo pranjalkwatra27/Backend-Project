@@ -5,13 +5,13 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(() => localStorage.getItem('kuvora_token') || localStorage.getItem('talentpulse_token') || null);
+  const [token, setToken] = useState(() => localStorage.getItem('candidex_token') || localStorage.getItem('kuvora_token') || localStorage.getItem('talentpulse_token') || null);
   const [loading, setLoading] = useState(true);
 
   // Check current session on mount
   useEffect(() => {
     const initializeAuth = async () => {
-      const storedToken = localStorage.getItem('kuvora_token') || localStorage.getItem('talentpulse_token');
+      const storedToken = localStorage.getItem('candidex_token') || localStorage.getItem('kuvora_token') || localStorage.getItem('talentpulse_token');
       if (storedToken) {
         try {
           const res = await apiClient('/auth/me');
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
     });
 
     if (res.success && res.token) {
-      localStorage.setItem('kuvora_token', res.token);
+      localStorage.setItem('candidex_token', res.token);
       setToken(res.token);
       setUser(res.user);
       return res.user;
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
     });
 
     if (res.success && res.token) {
-      localStorage.setItem('kuvora_token', res.token);
+      localStorage.setItem('candidex_token', res.token);
       setToken(res.token);
       setUser(res.user);
       return res.user;
@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }) => {
     });
 
     if (res.success && res.token) {
-      localStorage.setItem('kuvora_token', res.token);
+      localStorage.setItem('candidex_token', res.token);
       setToken(res.token);
       setUser(res.user);
       return res.user;
@@ -74,6 +74,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
+    localStorage.removeItem('candidex_token');
     localStorage.removeItem('kuvora_token');
     localStorage.removeItem('talentpulse_token');
     setToken(null);

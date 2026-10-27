@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { Briefcase, AlertCircle, ArrowRight, UserCheck } from 'lucide-react';
-import { KuvoraLogo } from '../../components/common/KuvoraLogo';
+import { CandidexLogo } from '../../components/common/CandidexLogo';
 
 export const RegisterPage = () => {
   const { register } = useAuth();
@@ -48,8 +48,8 @@ export const RegisterPage = () => {
   return (
     <div className="min-h-[85vh] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <KuvoraLogo size="lg" showText={false} className="justify-center mb-3" />
-        <h2 className="text-2xl font-bold tracking-tight text-slate-900">Create your Kuvora account</h2>
+        <CandidexLogo size="lg" showText={false} className="justify-center mb-3" />
+        <h2 className="text-2xl font-bold tracking-tight text-slate-900">Create your Candidex account</h2>
         <p className="mt-1.5 text-xs text-slate-600">
           Already registered?{' '}
           <Link to="/login" className="font-semibold text-brand-600 hover:text-brand-700">

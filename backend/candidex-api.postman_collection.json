@@ -1,0 +1,196 @@
+{
+  "info": {
+    "name": "Candidex ATS & Job Portal REST API",
+    "description": "Comprehensive Postman Collection covering all CRUD endpoints, authentication, faceted search, file uploads, and admin aggregations as required by Unit 5 syllabus.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api",
+      "type": "string"
+    },
+    {
+      "key": "candidateToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "recruiterToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "adminToken",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "2. Auth - Demo Login (Candidate)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"role\": \"candidate\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/auth/demo-login",
+          "host": ["{{baseUrl}}"],
+          "path": ["auth", "demo-login"]
+        }
+      }
+    },
+    {
+      "name": "3. Auth - Demo Login (Recruiter)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"role\": \"recruiter\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/auth/demo-login",
+          "host": ["{{baseUrl}}"],
+          "path": ["auth", "demo-login"]
+        }
+      }
+    },
+    {
+      "name": "4. Auth - Demo Login (Admin)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"role\": \"admin\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/auth/demo-login",
+          "host": ["{{baseUrl}}"],
+          "path": ["auth", "demo-login"]
+        }
+      }
+    },
+    {
+      "name": "5. Jobs - Faceted Search (Public)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/jobs?q=React&location=Bangalore&workMode=Hybrid&minExp=2&sort=newest&status=active",
+          "host": ["{{baseUrl}}"],
+          "path": ["jobs"],
+          "query": [
+            { "key": "q", "value": "React" },
+            { "key": "location", "value": "Bangalore" },
+            { "key": "workMode", "value": "Hybrid" },
+            { "key": "minExp", "value": "2" },
+            { "key": "sort", "value": "newest" },
+            { "key": "status", "value": "active" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "6. Jobs - Create Job (Recruiter Only)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{recruiterToken}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Senior Platform Architect\",\n  \"role\": \"Platform Architect\",\n  \"department\": \"Infrastructure\",\n  \"location\": \"Bangalore, India\",\n  \"workMode\": \"Hybrid\",\n  \"minExp\": 5,\n  \"maxExp\": 9,\n  \"ctcRange\": { \"min\": 35, \"max\": 55, \"currency\": \"INR\", \"isPublic\": true },\n  \"skills\": [\"Node.js\", \"Kubernetes\", \"MongoDB\", \"Distributed Systems\"],\n  \"description\": \"Lead core platform scaling initiatives and low-latency API architecture across distributed edge clusters.\",\n  \"requirements\": [\"5+ years distributed systems\", \"Strong Node.js and MongoDB performance indexing\"],\n  \"responsibilities\": [\"Scale microservices to 100k requests/second\", \"Mentor junior platform developers\"]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/jobs",
+          "host": ["{{baseUrl}}"],
+          "path": ["jobs"]
+        }
+      }
+    },
+    {
+      "name": "7. Applications - Submit Application (Candidate Only)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{candidateToken}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"jobId\": \"REPLACE_WITH_JOB_ID\",\n  \"resumeUrl\": \"/api/files/resume-sample.pdf\",\n  \"coverNote\": \"I am passionate about full-stack engineering and distributed systems.\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/applications",
+          "host": ["{{baseUrl}}"],
+          "path": ["applications"]
+        }
+      }
+    },
+    {
+      "name": "8. Applications - Update Stage State Machine (Recruiter Only)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{recruiterToken}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"stage\": \"interview\",\n  \"note\": \"Candidate cleared technical screening round with top score.\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/applications/REPLACE_WITH_APP_ID/stage",
+          "host": ["{{baseUrl}}"],
+          "path": ["applications", "REPLACE_WITH_APP_ID", "stage"]
+        }
+      }
+    },
+    {
+      "name": "9. Files - Secure Stream (IDOR-Protected)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{candidateToken}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/files/resume-david-chen-sample.pdf",
+          "host": ["{{baseUrl}}"],
+          "path": ["files", "resume-david-chen-sample.pdf"]
+        }
+      }
+    },
+    {
+      "name": "10. Admin - Aggregation Analytics",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/admin/analytics",
+          "host": ["{{baseUrl}}"],
+          "path": ["admin", "analytics"]
+        }
+      }
+    }
+  ]
+}

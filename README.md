@@ -1,6 +1,6 @@
-# TalentPulse — Job Portal & Applicant Tracking System (ATS)
+# Candidex — Candidate Experience & Applicant Tracking System (ATS)
 
-An enterprise-grade, two-sided Applicant Tracking System (ATS) and Job Portal connecting software candidates with high-growth engineering teams. Built with **React 18, Vite, Tailwind CSS, Node.js, Express.js, MongoDB Atlas (Mongoose), Multer, and JWT with role-based access control**.
+An enterprise-grade, two-sided Applicant Tracking System (ATS) and Job Portal connecting software candidates with high-growth engineering teams. Built with **React 18, Vite, Tailwind CSS (Nordic Deep Teal theme), Node.js, Express.js, MongoDB Atlas (Mongoose), Multer, and JWT with role-based access control**.
 
 ---
 
@@ -12,7 +12,7 @@ The platform includes a built-in **1-Click Instant Persona Switcher** on the top
 | :--- | :--- | :--- | :--- | :--- |
 | **Candidate** | David Chen | `david.candidate@gmail.demo` | `Password123!` | Faceted job search, resume upload, 1-click apply, application pipeline tracker, profile builder (100% completion meter), saved jobs |
 | **Recruiter** | Sarah Jenkins | `sarah.recruiter@stripe.demo` | `Password123!` | Openings management, job creation/editing, candidate dossier review, IDOR-protected resume preview, stage transitions, recruiter notes |
-| **Platform Admin** | Alex Vance | `alex.admin@talentpulse.demo` | `Password123!` | Aggregation analytics (funnel stages, work mode breakdown), multi-tenant job moderation, user directory & status control |
+| **Platform Admin** | Alex Vance | `alex.admin@candidex.demo` | `Password123!` | Aggregation analytics (funnel stages, work mode breakdown), multi-tenant job moderation, user directory & status control |
 
 ---
 
@@ -22,7 +22,7 @@ This application strictly implements all topics specified across the Web Develop
 
 ### Unit 1: Web Fundamentals & JavaScript
 - **HTML5 & Semantic Structure**: Descriptive semantic tags (`<header>`, `<nav>`, `<main>`, `<aside>`, `<table>`, `<section>`).
-- **CSS3 & Tailwind Design System**: Curated corporate color palette (`#f8fafc` warm slate, `#4f46e5` brand indigo), clean typography (Google Fonts *Inter*), subtle border lines, accessible focus rings.
+- **CSS3 & Tailwind Design System**: Curated Nordic Deep Teal & Mint palette (`#0d9488` teal, `#042f2e` forest, `#f8fafc` warm slate), clean typography (Google Fonts *Inter*), subtle border lines, accessible focus rings.
 - **JavaScript & ES6**: ES Modules (`import`/`export`), arrow functions, destructuring, spread/rest operators.
 - **Async JavaScript & Promises**: Asynchronous data fetching, `async/await`, custom centralized `fetch` API client.
 - **NPM & Node.js Basics**: Multi-package architecture (`package.json`, dependencies, scripts).

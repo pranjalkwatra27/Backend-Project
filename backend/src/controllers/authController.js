@@ -151,7 +151,7 @@ export const demoLogin = async (req, res, next) => {
     const { role = 'candidate' } = req.body;
     let query;
     if (role === 'recruiter') query = { email: 'sarah.recruiter@stripe.demo' };
-    else if (role === 'admin') query = { email: { $in: ['alex.admin@kuvora.demo', 'alex.admin@talentpulse.demo'] } };
+    else if (role === 'admin') query = { email: { $in: ['alex.admin@candidex.demo', 'alex.admin@kuvora.demo', 'alex.admin@talentpulse.demo'] } };
     else query = { email: 'david.candidate@gmail.demo' };
 
     const user = await User.findOne(query);
