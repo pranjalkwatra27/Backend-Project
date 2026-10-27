@@ -149,12 +149,12 @@ export const getMe = async (req, res, next) => {
 export const demoLogin = async (req, res, next) => {
   try {
     const { role = 'candidate' } = req.body;
-    let email;
-    if (role === 'recruiter') email = 'sarah.recruiter@stripe.demo';
-    else if (role === 'admin') email = 'alex.admin@talentpulse.demo';
-    else email = 'david.candidate@gmail.demo';
+    let query;
+    if (role === 'recruiter') query = { email: 'sarah.recruiter@stripe.demo' };
+    else if (role === 'admin') query = { email: { $in: ['alex.admin@kuvora.demo', 'alex.admin@talentpulse.demo'] } };
+    else query = { email: 'david.candidate@gmail.demo' };
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne(query);
     if (!user) {
       return res.status(404).json({
         success: false,

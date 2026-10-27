@@ -16,6 +16,7 @@ import {
   ChevronDown,
   Sparkles,
 } from 'lucide-react';
+import { KuvoraLogo } from './KuvoraLogo';
 
 export const Navbar = () => {
   const { user, logout, demoLogin } = useAuth();
@@ -85,18 +86,8 @@ export const Navbar = () => {
         <div className="flex justify-between h-16">
           {/* Logo & Brand */}
           <div className="flex items-center gap-8">
-            <Link to="/" className="flex items-center gap-2.5 group">
-              <div className="h-9 w-9 rounded-lg bg-brand-600 text-white flex items-center justify-center font-bold text-lg shadow-sm group-hover:bg-brand-700 transition-colors">
-                <Briefcase className="h-5 w-5" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-base font-bold tracking-tight text-slate-900 leading-none">
-                  TalentPulse
-                </span>
-                <span className="text-[11px] font-medium text-slate-500 uppercase tracking-wider mt-0.5">
-                  ATS & Job Portal
-                </span>
-              </div>
+            <Link to="/" className="flex items-center group">
+              <KuvoraLogo size="md" />
             </Link>
 
             {/* Desktop Navigation Links */}

@@ -42,7 +42,7 @@ app.get('/api/health', (req, res) => {
   res.status(200).json({
     status: 'online',
     timestamp: new Date().toISOString(),
-    service: 'TalentPulse ATS API',
+    service: 'Kuvora ATS API',
     uptime: `${Math.round(process.uptime())}s`,
   });
 });
@@ -77,7 +77,7 @@ const PORT = process.env.PORT || 5000;
 const startServer = async () => {
   await connectDB();
   server.listen(PORT, () => {
-    console.log(`[Server] TalentPulse API Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
+    console.log(`[Server] Kuvora ATS API Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
   });
 };
 
