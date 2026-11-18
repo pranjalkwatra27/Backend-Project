@@ -2,9 +2,6 @@ import { Application } from '../models/Application.js';
 import { Job } from '../models/Job.js';
 import { appEvents } from '../events/appEvents.js';
 
-// @desc    Apply to a job
-// @route   POST /api/applications
-// @access  Private (Candidate only)
 export const applyToJob = async (req, res, next) => {
   try {
     const { jobId, resumeUrl, resumeFilename, coverNote } = req.body;
@@ -16,7 +13,6 @@ export const applyToJob = async (req, res, next) => {
       });
     }
 
-    // Verify job exists and is active
     const job = await Job.findById(jobId);
     if (!job) {
       return res.status(404).json({ success: false, message: 'Target job posting not found.' });
@@ -29,7 +25,6 @@ export const applyToJob = async (req, res, next) => {
       });
     }
 
-    // Pre-check for duplicate application (enforced additionally by compound unique index)
     const existing = await Application.findOne({ jobId, candidateId: req.user._id });
     if (existing) {
       return res.status(409).json({
@@ -55,7 +50,6 @@ export const applyToJob = async (req, res, next) => {
       ],
     });
 
-    // Fire application:submitted event
     appEvents.emit('application:submitted', {
       applicationId: application._id,
       candidateName: req.user.name,
@@ -73,9 +67,6 @@ export const applyToJob = async (req, res, next) => {
   }
 };
 
-// @desc    Get all applications submitted by currently logged in candidate
-// @route   GET /api/applications/me
-// @access  Private (Candidate only)
 export const getMyApplications = async (req, res, next) => {
   try {
     const applications = await Application.find({ candidateId: req.user._id })
@@ -92,9 +83,6 @@ export const getMyApplications = async (req, res, next) => {
   }
 };
 
-// @desc    Update applicant stage in pipeline with state-machine transition check
-// @route   PATCH /api/applications/:id/stage
-// @access  Private (Recruiter owner or Admin)
 export const updateApplicationStage = async (req, res, next) => {
   try {
     const { stage, note } = req.body;
@@ -115,7 +103,6 @@ export const updateApplicationStage = async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'Application record not found.' });
     }
 
-    // Ownership check: Recruiter must own the job (or Admin)
     if (req.user.role !== 'admin' && application.jobId.recruiterId.toString() !== req.user._id.toString()) {
       return res.status(403).json({
         success: false,
@@ -123,7 +110,6 @@ export const updateApplicationStage = async (req, res, next) => {
       });
     }
 
-    // State machine validation
     const oldStage = application.stage;
     if (!application.canTransitionTo(stage)) {
       return res.status(400).json({
@@ -142,7 +128,6 @@ export const updateApplicationStage = async (req, res, next) => {
 
     await application.save();
 
-    // Trigger stage changed event
     appEvents.emit('application:stageChanged', {
       applicationId: application._id,
       candidateEmail: application.candidateId?.email,
@@ -161,9 +146,6 @@ export const updateApplicationStage = async (req, res, next) => {
   }
 };
 
-// @desc    Add internal recruiter note to application
-// @route   POST /api/applications/:id/notes
-// @access  Private (Recruiter owner or Admin)
 export const addRecruiterNote = async (req, res, next) => {
   try {
     const { note } = req.body;

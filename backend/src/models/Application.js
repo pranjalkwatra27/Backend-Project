@@ -1,12 +1,11 @@
 import mongoose from 'mongoose';
 
-// State machine definition: allowed stage transitions
 export const STAGE_FLOW = {
   applied: ['shortlisted', 'rejected'],
   shortlisted: ['interview', 'rejected'],
   interview: ['offered', 'rejected'],
-  offered: ['rejected'], // or final accepted
-  rejected: ['applied', 'shortlisted'] // allows reconsidering candidate
+  offered: ['rejected'],
+  rejected: ['applied', 'shortlisted']
 };
 
 const applicationSchema = new mongoose.Schema(
@@ -88,10 +87,8 @@ const applicationSchema = new mongoose.Schema(
   }
 );
 
-// Enforce unique application per candidate per job at database layer
 applicationSchema.index({ jobId: 1, candidateId: 1 }, { unique: true });
 
-// Helper to validate state machine transition
 applicationSchema.methods.canTransitionTo = function (nextStage) {
   if (this.stage === nextStage) return true;
   const allowed = STAGE_FLOW[this.stage] || [];

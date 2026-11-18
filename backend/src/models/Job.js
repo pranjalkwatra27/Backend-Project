@@ -71,7 +71,7 @@ const jobSchema = new mongoose.Schema(
       default: 5,
     },
     ctcRange: {
-      min: { type: Number, required: true }, // in LPA
+      min: { type: Number, required: true },
       max: { type: Number, required: true },
       currency: { type: String, default: 'INR' },
       isPublic: { type: Boolean, default: true },
@@ -91,7 +91,6 @@ const jobSchema = new mongoose.Schema(
   }
 );
 
-// Compound indexes for high-performance faceted search
 jobSchema.index({ role: 1, location: 1, minExp: 1 });
 jobSchema.index({ status: 1, createdAt: -1 });
 jobSchema.index({ 'ctcRange.min': 1, 'ctcRange.max': 1 });

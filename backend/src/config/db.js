@@ -4,7 +4,7 @@ export const connectDB = async () => {
   const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/job_portal_db';
   try {
     const conn = await mongoose.connect(uri, {
-      autoIndex: true, // Build compound indexes defined in schemas
+      autoIndex: true,
     });
     console.log(`[Database] MongoDB Connected: ${conn.connection.host}/${conn.connection.name}`);
     return conn;

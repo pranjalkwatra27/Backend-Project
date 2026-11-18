@@ -43,7 +43,6 @@ export const JobEditorModal = ({ isOpen, onClose, jobToEdit, onJobSaved }) => {
       );
       setDeadline(jobToEdit.deadline ? new Date(jobToEdit.deadline).toISOString().split('T')[0] : '');
     } else {
-      // Defaults for new job
       setTitle('');
       setRole('');
       setDepartment('Engineering');
@@ -136,6 +135,7 @@ export const JobEditorModal = ({ isOpen, onClose, jobToEdit, onJobSaved }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-semibold text-slate-700 mb-1">Job Title *</label>
+
             <input
               type="text"
               required
@@ -148,6 +148,7 @@ export const JobEditorModal = ({ isOpen, onClose, jobToEdit, onJobSaved }) => {
 
           <div>
             <label className="block text-xs font-semibold text-slate-700 mb-1">Role / Designation *</label>
+
             <input
               type="text"
               required
@@ -160,6 +161,7 @@ export const JobEditorModal = ({ isOpen, onClose, jobToEdit, onJobSaved }) => {
 
           <div>
             <label className="block text-xs font-semibold text-slate-700 mb-1">Department</label>
+
             <input
               type="text"
               value={department}
@@ -171,6 +173,7 @@ export const JobEditorModal = ({ isOpen, onClose, jobToEdit, onJobSaved }) => {
 
           <div>
             <label className="block text-xs font-semibold text-slate-700 mb-1">Work Location *</label>
+
             <input
               type="text"
               required
@@ -183,19 +186,23 @@ export const JobEditorModal = ({ isOpen, onClose, jobToEdit, onJobSaved }) => {
 
           <div>
             <label className="block text-xs font-semibold text-slate-700 mb-1">Work Mode</label>
+
             <select
               value={workMode}
               onChange={(e) => setWorkMode(e.target.value)}
               className="w-full text-xs border border-slate-200 rounded-lg p-2.5 focus-ring bg-white"
             >
               <option value="Hybrid">Hybrid</option>
+
               <option value="Remote">Remote</option>
+
               <option value="On-site">On-site</option>
             </select>
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-slate-700 mb-1">Application Deadline</label>
+
             <input
               type="date"
               value={deadline}
@@ -205,10 +212,10 @@ export const JobEditorModal = ({ isOpen, onClose, jobToEdit, onJobSaved }) => {
           </div>
         </div>
 
-        {/* Experience & CTC */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2 border-t border-slate-100">
           <div>
             <label className="block text-xs font-semibold text-slate-700 mb-1">Min Exp (Yrs)</label>
+
             <input
               type="number"
               min="0"
@@ -217,8 +224,10 @@ export const JobEditorModal = ({ isOpen, onClose, jobToEdit, onJobSaved }) => {
               className="w-full text-xs border border-slate-200 rounded-lg p-2 focus-ring"
             />
           </div>
+
           <div>
             <label className="block text-xs font-semibold text-slate-700 mb-1">Max Exp (Yrs)</label>
+
             <input
               type="number"
               min="0"
@@ -227,8 +236,10 @@ export const JobEditorModal = ({ isOpen, onClose, jobToEdit, onJobSaved }) => {
               className="w-full text-xs border border-slate-200 rounded-lg p-2 focus-ring"
             />
           </div>
+
           <div>
             <label className="block text-xs font-semibold text-slate-700 mb-1">Min CTC (LPA)</label>
+
             <input
               type="number"
               min="1"
@@ -237,8 +248,10 @@ export const JobEditorModal = ({ isOpen, onClose, jobToEdit, onJobSaved }) => {
               className="w-full text-xs border border-slate-200 rounded-lg p-2 focus-ring"
             />
           </div>
+
           <div>
             <label className="block text-xs font-semibold text-slate-700 mb-1">Max CTC (LPA)</label>
+
             <input
               type="number"
               min="1"
@@ -249,11 +262,11 @@ export const JobEditorModal = ({ isOpen, onClose, jobToEdit, onJobSaved }) => {
           </div>
         </div>
 
-        {/* Skills */}
         <div>
           <label className="block text-xs font-semibold text-slate-700 mb-1">
             Required Skills (comma-separated) *
           </label>
+
           <input
             type="text"
             required
@@ -264,9 +277,9 @@ export const JobEditorModal = ({ isOpen, onClose, jobToEdit, onJobSaved }) => {
           />
         </div>
 
-        {/* Detailed Description */}
         <div>
           <label className="block text-xs font-semibold text-slate-700 mb-1">Job Description *</label>
+
           <textarea
             rows={4}
             required
@@ -277,11 +290,11 @@ export const JobEditorModal = ({ isOpen, onClose, jobToEdit, onJobSaved }) => {
           />
         </div>
 
-        {/* Requirements */}
         <div>
           <label className="block text-xs font-semibold text-slate-700 mb-1">
             Key Requirements (One item per line)
           </label>
+
           <textarea
             rows={3}
             value={requirements}
@@ -291,7 +304,6 @@ export const JobEditorModal = ({ isOpen, onClose, jobToEdit, onJobSaved }) => {
           />
         </div>
 
-        {/* Actions */}
         <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-3">
           <button
             type="button"
@@ -300,6 +312,7 @@ export const JobEditorModal = ({ isOpen, onClose, jobToEdit, onJobSaved }) => {
           >
             Cancel
           </button>
+
           <button
             type="submit"
             disabled={loading}

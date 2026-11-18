@@ -2,12 +2,8 @@ import { Application } from '../models/Application.js';
 import { Job } from '../models/Job.js';
 import { User } from '../models/User.js';
 
-// @desc    Get aggregated platform analytics
-// @route   GET /api/admin/analytics
-// @access  Private (Admin only)
 export const getPlatformAnalytics = async (req, res, next) => {
   try {
-    // 1. Pipeline Funnel Aggregation
     const funnelStages = await Application.aggregate([
       {
         $group: {
@@ -30,7 +26,6 @@ export const getPlatformAnalytics = async (req, res, next) => {
       }
     });
 
-    // 2. Jobs by Work Mode Aggregation
     const workModeDist = await Job.aggregate([
       {
         $group: {
@@ -40,7 +35,6 @@ export const getPlatformAnalytics = async (req, res, next) => {
       },
     ]);
 
-    // 3. User counts by role
     const usersByRole = await User.aggregate([
       {
         $group: {
@@ -50,7 +44,6 @@ export const getPlatformAnalytics = async (req, res, next) => {
       },
     ]);
 
-    // 4. Totals summary
     const totalJobs = await Job.countDocuments();
     const activeJobs = await Job.countDocuments({ status: 'active' });
     const totalApplications = await Application.countDocuments();
@@ -79,9 +72,6 @@ export const getPlatformAnalytics = async (req, res, next) => {
   }
 };
 
-// @desc    Get all jobs across platform with filters
-// @route   GET /api/admin/jobs
-// @access  Private (Admin only)
 export const getAdminJobs = async (req, res, next) => {
   try {
     const { status, page = 1, limit = 20 } = req.query;
@@ -108,9 +98,6 @@ export const getAdminJobs = async (req, res, next) => {
   }
 };
 
-// @desc    Update job status (moderation: approve / reject / close)
-// @route   PATCH /api/admin/jobs/:id/status
-// @access  Private (Admin only)
 export const updateJobModerationStatus = async (req, res, next) => {
   try {
     const { status } = req.body;
@@ -133,9 +120,6 @@ export const updateJobModerationStatus = async (req, res, next) => {
   }
 };
 
-// @desc    Get all platform users
-// @route   GET /api/admin/users
-// @access  Private (Admin only)
 export const getAdminUsers = async (req, res, next) => {
   try {
     const { role } = req.query;
@@ -156,9 +140,6 @@ export const getAdminUsers = async (req, res, next) => {
   }
 };
 
-// @desc    Toggle user active status or change role
-// @route   PATCH /api/admin/users/:id/status
-// @access  Private (Admin only)
 export const toggleUserStatus = async (req, res, next) => {
   try {
     const { isActive, role } = req.body;

@@ -20,7 +20,6 @@ export const Modal = ({ isOpen, onClose, title, children, maxWidth = 'max-w-2xl'
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
-      {/* Dimmed backdrop */}
       <div
         className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity"
         onClick={onClose}
@@ -30,9 +29,10 @@ export const Modal = ({ isOpen, onClose, title, children, maxWidth = 'max-w-2xl'
         <div
           className={`relative transform overflow-hidden rounded-xl bg-white text-left shadow-xl transition-all sm:my-8 w-full ${maxWidth} border border-slate-200`}
         >
-          {/* Header */}
+
           <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
             <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
+
             <button
               onClick={onClose}
               className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors"
@@ -42,7 +42,6 @@ export const Modal = ({ isOpen, onClose, title, children, maxWidth = 'max-w-2xl'
             </button>
           </div>
 
-          {/* Body */}
           <div className="px-6 py-5 max-h-[80vh] overflow-y-auto">{children}</div>
         </div>
       </div>

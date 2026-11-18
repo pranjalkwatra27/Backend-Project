@@ -50,6 +50,7 @@ export const RegisterPage = () => {
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <CandidexLogo size="lg" showText={false} className="justify-center mb-3" />
         <h2 className="text-2xl font-bold tracking-tight text-slate-900">Create your Candidex account</h2>
+
         <p className="mt-1.5 text-xs text-slate-600">
           Already registered?{' '}
           <Link to="/login" className="font-semibold text-brand-600 hover:text-brand-700">
@@ -67,9 +68,9 @@ export const RegisterPage = () => {
             </div>
           )}
 
-          {/* Role Selector Pill */}
           <div>
             <label className="block text-xs font-semibold text-slate-700 mb-2">I want to:</label>
+
             <div className="grid grid-cols-2 gap-2 bg-slate-100 p-1 rounded-xl border border-slate-200">
               <button
                 type="button"
@@ -80,6 +81,7 @@ export const RegisterPage = () => {
               >
                 Apply for Jobs
               </button>
+
               <button
                 type="button"
                 onClick={() => setRole('recruiter')}
@@ -95,6 +97,7 @@ export const RegisterPage = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-xs font-semibold text-slate-700 mb-1">Full Name *</label>
+
               <input
                 type="text"
                 required
@@ -107,6 +110,7 @@ export const RegisterPage = () => {
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 mb-1">Email Address *</label>
+
               <input
                 type="email"
                 required
@@ -120,6 +124,7 @@ export const RegisterPage = () => {
             {role === 'recruiter' && (
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">Company / Organization *</label>
+
                 <input
                   type="text"
                   required
@@ -133,6 +138,7 @@ export const RegisterPage = () => {
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 mb-1">Password * (min 6 chars)</label>
+
               <input
                 type="password"
                 required

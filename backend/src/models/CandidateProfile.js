@@ -40,11 +40,11 @@ const candidateProfileSchema = new mongoose.Schema(
       min: 0,
     },
     expectedCtc: {
-      type: Number, // In LPA
+      type: Number,
       default: 0,
     },
     currentCtc: {
-      type: Number, // In LPA
+      type: Number,
       default: 0,
     },
     noticePeriod: {
@@ -98,7 +98,6 @@ const candidateProfileSchema = new mongoose.Schema(
   }
 );
 
-// Method to calculate profile completion score (0 to 100%)
 candidateProfileSchema.methods.calculateCompletionScore = function () {
   let score = 0;
   if (this.headline && this.headline.trim().length > 5) score += 15;
@@ -108,12 +107,11 @@ candidateProfileSchema.methods.calculateCompletionScore = function () {
   if (this.experience && this.experience.length > 0) score += 15;
   if (this.resumes && this.resumes.length > 0) score += 15;
   if (this.portfolioLinks && (this.portfolioLinks.github || this.portfolioLinks.linkedin || this.portfolioLinks.portfolio)) score += 5;
-  
+
   this.profileCompletionScore = Math.min(score, 100);
   return this.profileCompletionScore;
 };
 
-// Pre-save hook to always update profileCompletionScore
 candidateProfileSchema.pre('save', function (next) {
   this.calculateCompletionScore();
   next();

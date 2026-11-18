@@ -12,7 +12,6 @@ import { validate } from '../middleware/validatorMiddleware.js';
 
 const router = express.Router();
 
-// Candidate endpoints
 router.post(
   '/',
   protect,
@@ -27,7 +26,6 @@ router.post(
 
 router.get('/me', protect, authorizeRoles('candidate'), getMyApplications);
 
-// Recruiter / Admin pipeline control endpoints
 router.patch(
   '/:id/stage',
   protect,

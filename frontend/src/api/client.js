@@ -1,5 +1,3 @@
-// Centralized API client fetch wrapper
-
 const API_BASE = '/api';
 
 export const apiClient = async (endpoint, options = {}) => {
@@ -12,7 +10,6 @@ export const apiClient = async (endpoint, options = {}) => {
     ...options.headers,
   };
 
-  // If not FormData, default to application/json
   if (!(options.body instanceof FormData)) {
     headers['Content-Type'] = 'application/json';
   }
@@ -29,10 +26,7 @@ export const apiClient = async (endpoint, options = {}) => {
   try {
     const response = await fetch(`${API_BASE}${endpoint}`, config);
 
-    // If unauthorized or deactivated, trigger clean handling
     if (response.status === 401 && !endpoint.includes('/auth/login')) {
-      // Token might be expired
-      // Do not clear immediately on login failure
     }
 
     const data = await response.json().catch(() => ({}));

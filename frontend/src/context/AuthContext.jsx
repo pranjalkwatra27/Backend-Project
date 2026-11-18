@@ -8,7 +8,6 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(() => localStorage.getItem('candidex_token') || localStorage.getItem('kuvora_token') || localStorage.getItem('talentpulse_token') || null);
   const [loading, setLoading] = useState(true);
 
-  // Check current session on mount
   useEffect(() => {
     const initializeAuth = async () => {
       const storedToken = localStorage.getItem('candidex_token') || localStorage.getItem('kuvora_token') || localStorage.getItem('talentpulse_token');
@@ -109,7 +108,12 @@ export const AuthProvider = ({ children }) => {
 
   const isJobSaved = (jobId) => {
     if (!user || !user.savedJobs) return false;
-    return user.savedJobs.some((id) => (typeof id === 'string' ? id === jobId : id._id === jobId));
+    return user.savedJobs.some((id) => {
+      if (!id) return false;
+      if (typeof id === 'string') return id === jobId;
+      if (id._id) return id._id.toString() === jobId;
+      return id.toString() === jobId;
+    });
   };
 
   return (

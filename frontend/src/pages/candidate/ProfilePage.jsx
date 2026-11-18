@@ -23,7 +23,6 @@ export const ProfilePage = () => {
   const [saving, setSaving] = useState(false);
   const [statusMessage, setStatusMessage] = useState(null);
 
-  // Form Fields
   const [headline, setHeadline] = useState('');
   const [bio, setBio] = useState('');
   const [phone, setPhone] = useState('');
@@ -36,7 +35,6 @@ export const ProfilePage = () => {
   const [noticePeriod, setNoticePeriod] = useState('30 Days');
   const [portfolioLinks, setPortfolioLinks] = useState({ github: '', linkedin: '', portfolio: '' });
 
-  // Uploading state
   const [uploadingResume, setUploadingResume] = useState(false);
   const [uploadError, setUploadError] = useState(null);
 
@@ -150,16 +148,15 @@ export const ProfilePage = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Header with Completion Meter */}
       <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm mb-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Candidate Profile Builder</h1>
+
           <p className="mt-1 text-xs sm:text-sm text-slate-600">
             A comprehensive profile enhances your ranking score in recruiter candidate search pipelines.
           </p>
         </div>
 
-        {/* Completion Meter */}
         <div className="flex items-center gap-4 bg-slate-50 border border-slate-200 rounded-lg p-3.5 shrink-0">
           <div className="relative w-12 h-12 flex items-center justify-center">
             <svg className="w-12 h-12 -rotate-90">
@@ -185,11 +182,13 @@ export const ProfilePage = () => {
                 fill="transparent"
               />
             </svg>
+
             <span className="absolute text-xs font-bold text-slate-900">{completionScore}%</span>
           </div>
 
           <div>
             <p className="text-xs font-semibold text-slate-800">Profile Completion</p>
+
             <p className="text-[11px] text-slate-500">
               {completionScore >= 80 ? 'Optimized for Recruiters' : 'Add skills & resume to reach 100%'}
             </p>
@@ -215,7 +214,6 @@ export const ProfilePage = () => {
       )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Main Details Form */}
         <div className="lg:col-span-2 space-y-6">
           <form onSubmit={handleSaveProfile} className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-6">
             <h2 className="text-sm font-semibold text-slate-900 pb-3 border-b border-slate-100 flex items-center gap-2">
@@ -228,6 +226,7 @@ export const ProfilePage = () => {
                 <label className="block text-xs font-medium text-slate-700 mb-1">
                   Professional Headline *
                 </label>
+
                 <input
                   type="text"
                   value={headline}
@@ -239,6 +238,7 @@ export const ProfilePage = () => {
 
               <div>
                 <label className="block text-xs font-medium text-slate-700 mb-1">Phone Number</label>
+
                 <input
                   type="text"
                   value={phone}
@@ -250,6 +250,7 @@ export const ProfilePage = () => {
 
               <div>
                 <label className="block text-xs font-medium text-slate-700 mb-1">Current Location</label>
+
                 <input
                   type="text"
                   value={location}
@@ -261,6 +262,7 @@ export const ProfilePage = () => {
 
               <div className="sm:col-span-2">
                 <label className="block text-xs font-medium text-slate-700 mb-1">Executive Bio</label>
+
                 <textarea
                   rows={4}
                   value={bio}
@@ -271,10 +273,10 @@ export const ProfilePage = () => {
               </div>
             </div>
 
-            {/* Compensation & Experience */}
             <div className="pt-4 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-4 gap-4">
               <div>
                 <label className="block text-xs font-medium text-slate-700 mb-1">Experience (Yrs)</label>
+
                 <input
                   type="number"
                   min="0"
@@ -286,6 +288,7 @@ export const ProfilePage = () => {
 
               <div>
                 <label className="block text-xs font-medium text-slate-700 mb-1">Current CTC (LPA)</label>
+
                 <input
                   type="number"
                   min="0"
@@ -297,6 +300,7 @@ export const ProfilePage = () => {
 
               <div>
                 <label className="block text-xs font-medium text-slate-700 mb-1">Expected CTC (LPA)</label>
+
                 <input
                   type="number"
                   min="0"
@@ -308,25 +312,30 @@ export const ProfilePage = () => {
 
               <div>
                 <label className="block text-xs font-medium text-slate-700 mb-1">Notice Period</label>
+
                 <select
                   value={noticePeriod}
                   onChange={(e) => setNoticePeriod(e.target.value)}
                   className="w-full text-xs text-slate-900 border border-slate-200 rounded-lg p-2 focus-ring bg-white"
                 >
                   <option value="Immediate">Immediate</option>
+
                   <option value="15 Days">15 Days</option>
+
                   <option value="30 Days">30 Days</option>
+
                   <option value="60 Days">60 Days</option>
+
                   <option value="90 Days">90 Days</option>
                 </select>
               </div>
             </div>
 
-            {/* Skills Chip Management */}
             <div className="pt-4 border-t border-slate-100">
               <label className="block text-xs font-semibold text-slate-800 mb-1.5">
                 Core Competencies & Skills (Indexed)
               </label>
+
               <div className="flex gap-2 mb-3">
                 <input
                   type="text"
@@ -364,9 +373,9 @@ export const ProfilePage = () => {
               </div>
             </div>
 
-            {/* Portfolio Links */}
             <div className="pt-4 border-t border-slate-100 space-y-3">
               <label className="block text-xs font-semibold text-slate-800">Portfolio & Social Presence</label>
+
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
                   <input
@@ -377,6 +386,7 @@ export const ProfilePage = () => {
                     className="w-full text-xs border border-slate-200 rounded-lg p-2 focus-ring"
                   />
                 </div>
+
                 <div>
                   <input
                     type="url"
@@ -386,6 +396,7 @@ export const ProfilePage = () => {
                     className="w-full text-xs border border-slate-200 rounded-lg p-2 focus-ring"
                   />
                 </div>
+
                 <div>
                   <input
                     type="url"
@@ -398,7 +409,6 @@ export const ProfilePage = () => {
               </div>
             </div>
 
-            {/* Submit Button */}
             <div className="pt-4 border-t border-slate-100 flex justify-end">
               <button
                 type="submit"
@@ -411,7 +421,6 @@ export const ProfilePage = () => {
           </form>
         </div>
 
-        {/* Right Sidebar: Resumes & Documents */}
         <div className="space-y-6">
           <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-5">
             <h2 className="text-sm font-semibold text-slate-900 pb-3 border-b border-slate-100 flex items-center gap-2">
@@ -419,14 +428,15 @@ export const ProfilePage = () => {
               Verified Resumes
             </h2>
 
-            {/* Upload Zone */}
             <div className="border-2 border-dashed border-slate-300 rounded-xl p-5 text-center hover:border-brand-500 transition-colors bg-slate-50">
               <Upload className="h-8 w-8 text-slate-400 mx-auto mb-2" />
               <p className="text-xs font-semibold text-slate-800">Upload Updated Resume</p>
+
               <p className="text-[11px] text-slate-500 mt-0.5">PDF or DOCX format, up to 2MB</p>
 
               <label className="mt-3 inline-block cursor-pointer px-3.5 py-1.5 text-xs font-medium text-brand-600 bg-white border border-slate-200 rounded-lg shadow-sm hover:bg-slate-50 transition-colors">
                 <span>{uploadingResume ? 'Uploading...' : 'Choose Document'}</span>
+
                 <input
                   type="file"
                   accept=".pdf,.doc,.docx"
@@ -439,7 +449,6 @@ export const ProfilePage = () => {
               {uploadError && <p className="text-[11px] text-rose-600 mt-2">{uploadError}</p>}
             </div>
 
-            {/* List of uploaded resumes */}
             <div>
               <p className="text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
                 Stored Documents ({profile?.resumes?.length || 0})
@@ -454,6 +463,7 @@ export const ProfilePage = () => {
                     >
                       <div className="truncate pr-2">
                         <p className="font-medium text-slate-800 truncate">{resItem.originalName}</p>
+
                         <p className="text-[10px] text-slate-400">
                           {new Date(resItem.uploadedAt).toLocaleDateString()} &bull;{' '}
                           {Math.round((resItem.size || 0) / 1024)} KB

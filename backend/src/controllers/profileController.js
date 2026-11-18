@@ -1,9 +1,6 @@
 import { CandidateProfile } from '../models/CandidateProfile.js';
 import { User } from '../models/User.js';
 
-// @desc    Get candidate profile & completion score
-// @route   GET /api/profile/me
-// @access  Private (Candidate)
 export const getMyProfile = async (req, res, next) => {
   try {
     let profile = await CandidateProfile.findOne({ userId: req.user._id });
@@ -28,9 +25,6 @@ export const getMyProfile = async (req, res, next) => {
   }
 };
 
-// @desc    Update candidate profile
-// @route   PUT /api/profile/me
-// @access  Private (Candidate)
 export const updateMyProfile = async (req, res, next) => {
   try {
     let profile = await CandidateProfile.findOne({ userId: req.user._id });
@@ -81,9 +75,6 @@ export const updateMyProfile = async (req, res, next) => {
   }
 };
 
-// @desc    Toggle save/unsave a job
-// @route   POST /api/profile/save-job/:jobId
-// @access  Private (Candidate)
 export const toggleSaveJob = async (req, res, next) => {
   try {
     const { jobId } = req.params;
@@ -109,9 +100,6 @@ export const toggleSaveJob = async (req, res, next) => {
   }
 };
 
-// @desc    Get candidate's saved jobs
-// @route   GET /api/profile/saved-jobs
-// @access  Private (Candidate)
 export const getSavedJobs = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id).populate({

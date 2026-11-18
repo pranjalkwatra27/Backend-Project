@@ -56,12 +56,10 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-// Method to verify password (Password Hashing via bcryptjs)
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.passwordHash);
 };
 
-// Static helper to hash password
 userSchema.statics.hashPassword = async function (plainPassword) {
   const salt = await bcrypt.genSalt(10);
   return await bcrypt.hash(plainPassword, salt);

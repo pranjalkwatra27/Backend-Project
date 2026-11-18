@@ -19,7 +19,6 @@
   }
 }
 
-/* Custom restrained scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -35,12 +34,11 @@
   background: #94a3b8;
 }
 
-/* Accessible focus ring utility */
 .focus-ring {
   @apply focus:outline-none focus:ring-2 focus:ring-brand-600 focus:ring-offset-1;
 }
 
-/* Subtle card styling with crisp borders */
 .subtle-card {
   @apply bg-white border border-slate-200 rounded-lg shadow-sm hover:border-slate-300 transition-all;
 }
+

@@ -50,6 +50,7 @@ export const LoginPage = () => {
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <CandidexLogo size="lg" showText={false} className="justify-center mb-3" />
         <h2 className="text-2xl font-bold tracking-tight text-slate-900">Sign in to Candidex</h2>
+
         <p className="mt-1.5 text-xs text-slate-600">
           Or{' '}
           <Link to="/register" className="font-semibold text-brand-600 hover:text-brand-700">
@@ -70,6 +71,7 @@ export const LoginPage = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-xs font-semibold text-slate-700 mb-1">Email Address</label>
+
               <input
                 type="email"
                 required
@@ -82,6 +84,7 @@ export const LoginPage = () => {
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 mb-1">Password</label>
+
               <input
                 type="password"
                 required
@@ -102,7 +105,6 @@ export const LoginPage = () => {
             </button>
           </form>
 
-          {/* Quick Demo Credentials Box */}
           <div className="pt-4 border-t border-slate-100">
             <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block text-center mb-3">
               1-Click Demo Evaluation Sign-in
@@ -116,6 +118,7 @@ export const LoginPage = () => {
               >
                 Candidate (David)
               </button>
+
               <button
                 type="button"
                 onClick={() => handleDemoSignIn('recruiter')}
@@ -123,6 +126,7 @@ export const LoginPage = () => {
               >
                 Recruiter (Sarah)
               </button>
+
               <button
                 type="button"
                 onClick={() => handleDemoSignIn('admin')}

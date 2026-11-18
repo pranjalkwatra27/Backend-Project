@@ -2,16 +2,12 @@ import jwt from 'jsonwebtoken';
 import { User } from '../models/User.js';
 import { CandidateProfile } from '../models/CandidateProfile.js';
 
-// Generate JWT token helper
 export const generateToken = (userId) => {
   return jwt.sign({ id: userId }, process.env.JWT_SECRET || 'super_secret_jwt_key_talentpulse_2026', {
     expiresIn: process.env.JWT_EXPIRES_IN || '7d',
   });
 };
 
-// @desc    Register a new user
-// @route   POST /api/auth/register
-// @access  Public
 export const register = async (req, res, next) => {
   try {
     const { name, email, password, role = 'candidate', company } = req.body;
@@ -34,7 +30,6 @@ export const register = async (req, res, next) => {
       company: role === 'recruiter' ? company : undefined,
     });
 
-    // If candidate, initialize empty profile
     if (user.role === 'candidate') {
       await CandidateProfile.create({ userId: user._id });
     }
@@ -58,9 +53,6 @@ export const register = async (req, res, next) => {
   }
 };
 
-// @desc    Login user & get token
-// @route   POST /api/auth/login
-// @access  Public
 export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -115,9 +107,6 @@ export const login = async (req, res, next) => {
   }
 };
 
-// @desc    Get currently logged in user profile
-// @route   GET /api/auth/me
-// @access  Private
 export const getMe = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
@@ -143,9 +132,6 @@ export const getMe = async (req, res, next) => {
   }
 };
 
-// @desc    One-click demo login for reviewers
-// @route   POST /api/auth/demo-login
-// @access  Public
 export const demoLogin = async (req, res, next) => {
   try {
     const { role = 'candidate' } = req.body;

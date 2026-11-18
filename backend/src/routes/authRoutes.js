@@ -6,7 +6,6 @@ import { validate } from '../middleware/validatorMiddleware.js';
 
 const router = express.Router();
 
-// Validation chains for register
 const registerValidation = [
   body('name').trim().notEmpty().withMessage('Full name is required'),
   body('email').isEmail().normalizeEmail().withMessage('Valid email address is required'),
@@ -15,7 +14,6 @@ const registerValidation = [
   validate,
 ];
 
-// Validation chains for login
 const loginValidation = [
   body('email').isEmail().normalizeEmail().withMessage('Valid email is required'),
   body('password').notEmpty().withMessage('Password is required'),

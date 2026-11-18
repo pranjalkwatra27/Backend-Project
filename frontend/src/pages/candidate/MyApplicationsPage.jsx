@@ -46,11 +46,11 @@ export const MyApplicationsPage = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Header */}
       <div className="mb-8">
         <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
           Application Pipeline Tracker
         </h1>
+
         <p className="mt-1.5 text-sm text-slate-600">
           Monitor your candidacies in real-time as hiring managers advance your status through recruitment stages.
         </p>
@@ -59,12 +59,14 @@ export const MyApplicationsPage = () => {
       {loading ? (
         <div className="space-y-4">
           <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm animate-pulse h-40"></div>
+
           <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm animate-pulse h-40"></div>
         </div>
       ) : applications.length === 0 ? (
         <div className="bg-white border border-slate-200 rounded-xl p-12 text-center">
           <FileText className="h-10 w-10 text-slate-300 mx-auto mb-3" />
           <h3 className="text-base font-semibold text-slate-800">No active applications yet</h3>
+
           <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
             You haven't submitted any job applications yet. Explore openings and apply with your verified resume.
           </p>
@@ -88,7 +90,6 @@ export const MyApplicationsPage = () => {
                 key={app._id}
                 className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:border-slate-300 transition-all space-y-6"
               >
-                {/* Top Info */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
@@ -115,7 +116,6 @@ export const MyApplicationsPage = () => {
                   </div>
                 </div>
 
-                {/* Pipeline Progression Stepper */}
                 <div className="py-2">
                   <p className="text-xs font-semibold text-slate-700 uppercase tracking-wider mb-3">
                     Hiring Stage Progress
@@ -130,7 +130,6 @@ export const MyApplicationsPage = () => {
                     </div>
                   ) : (
                     <div className="relative">
-                      {/* Stepper Grid */}
                       <div className="grid grid-cols-4 gap-2">
                         {PIPELINE_STAGES.map((stg, idx) => {
                           const isCompleted = currentIndex >= idx;
@@ -169,7 +168,6 @@ export const MyApplicationsPage = () => {
                         })}
                       </div>
 
-                      {/* Connecting line behind circles */}
                       <div className="absolute top-4 left-[12%] right-[12%] h-0.5 bg-slate-200 -z-0">
                         <div
                           className="h-full bg-emerald-500 transition-all duration-300"
@@ -182,7 +180,6 @@ export const MyApplicationsPage = () => {
                   )}
                 </div>
 
-                {/* History & Notes Details */}
                 <div className="bg-slate-50 border border-slate-100 rounded-lg p-3.5 text-xs space-y-2">
                   <div className="flex items-center justify-between text-slate-500">
                     <span>
@@ -209,7 +206,6 @@ export const MyApplicationsPage = () => {
                     </div>
                   )}
 
-                  {/* Stage history log */}
                   {app.stageHistory && app.stageHistory.length > 0 && (
                     <div className="pt-2 border-t border-slate-200/60">
                       <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-1">

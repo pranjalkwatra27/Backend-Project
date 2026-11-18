@@ -23,7 +23,6 @@ export const JobManagementPage = () => {
   const [searchFilter, setSearchFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
 
-  // Modal State
   const [editorModalOpen, setEditorModalOpen] = useState(false);
   const [jobToEdit, setJobToEdit] = useState(null);
 
@@ -82,10 +81,10 @@ export const JobManagementPage = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Job Openings Management</h1>
+
           <p className="mt-1 text-xs sm:text-sm text-slate-600">
             Publish openings, calibrate salary parameters, and manage hiring pipeline statuses.
           </p>
@@ -103,7 +102,6 @@ export const JobManagementPage = () => {
         </button>
       </div>
 
-      {/* Filter and Search Bar */}
       <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex flex-col sm:flex-row gap-3 items-center justify-between">
         <div className="w-full sm:w-72 flex items-center px-3 gap-2 bg-slate-50 border border-slate-200 rounded-lg py-2">
           <Search className="h-4 w-4 text-slate-400 shrink-0" />
@@ -118,19 +116,21 @@ export const JobManagementPage = () => {
 
         <div className="flex items-center gap-2 self-end sm:self-auto">
           <span className="text-xs text-slate-500 font-medium">Status:</span>
+
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
             className="text-xs bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 focus-ring"
           >
             <option value="all">All Statuses ({jobs.length})</option>
+
             <option value="active">Active Only</option>
+
             <option value="closed">Closed Only</option>
           </select>
         </div>
       </div>
 
-      {/* Jobs Table */}
       <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
         {loading ? (
           <div className="p-12 text-center text-xs text-slate-400">Loading your job postings...</div>
@@ -138,6 +138,7 @@ export const JobManagementPage = () => {
           <div className="p-12 text-center">
             <Briefcase className="h-8 w-8 text-slate-300 mx-auto mb-2" />
             <p className="text-xs font-semibold text-slate-700">No job openings match the criteria</p>
+
             <p className="text-[11px] text-slate-400 mt-0.5">Click "Create Job Opening" to post your first position.</p>
           </div>
         ) : (
@@ -146,13 +147,19 @@ export const JobManagementPage = () => {
               <thead className="bg-slate-50/80 border-b border-slate-200 text-slate-600 font-semibold">
                 <tr>
                   <th className="px-6 py-3.5">Position Title</th>
+
                   <th className="px-6 py-3.5">Department</th>
+
                   <th className="px-6 py-3.5">Work Mode & Location</th>
+
                   <th className="px-6 py-3.5">Salary Band</th>
+
                   <th className="px-6 py-3.5">Status</th>
+
                   <th className="px-6 py-3.5 text-right">Actions</th>
                 </tr>
               </thead>
+
               <tbody className="divide-y divide-slate-100">
                 {filteredJobs.map((job) => (
                   <tr key={job._id} className="hover:bg-slate-50 transition-colors">
@@ -162,19 +169,24 @@ export const JobManagementPage = () => {
                         Created {new Date(job.createdAt).toLocaleDateString()}
                       </p>
                     </td>
+
                     <td className="px-6 py-4 text-slate-600">{job.department || 'Engineering'}</td>
+
                     <td className="px-6 py-4 text-slate-600">
                       <div className="flex items-center gap-1.5 flex-wrap">
                         <WorkModeBadge mode={job.workMode} />
                         <span className="text-slate-500">{job.location}</span>
                       </div>
                     </td>
+
                     <td className="px-6 py-4 font-medium text-slate-800">
                       ₹{job.ctcRange?.min} - ₹{job.ctcRange?.max} LPA
                     </td>
+
                     <td className="px-6 py-4">
                       <StatusBadge status={job.status} />
                     </td>
+
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">
                         <Link
@@ -185,6 +197,7 @@ export const JobManagementPage = () => {
                           <Users className="h-3.5 w-3.5" />
                           Pipeline
                         </Link>
+
                         <button
                           onClick={() => {
                             setJobToEdit(job);
@@ -195,6 +208,7 @@ export const JobManagementPage = () => {
                         >
                           <Edit className="h-3.5 w-3.5" />
                         </button>
+
                         <button
                           onClick={() => handleToggleJobStatus(job)}
                           className={`p-1.5 rounded transition-colors ${
@@ -220,7 +234,6 @@ export const JobManagementPage = () => {
         )}
       </div>
 
-      {/* Job Editor Modal */}
       <JobEditorModal
         isOpen={editorModalOpen}
         onClose={() => setEditorModalOpen(false)}

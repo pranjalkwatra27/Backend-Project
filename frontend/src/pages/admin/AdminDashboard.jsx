@@ -15,18 +15,15 @@ import {
 } from 'lucide-react';
 
 export const AdminDashboard = () => {
-  const [activeTab, setActiveTab] = useState('analytics'); // 'analytics' | 'jobs' | 'users'
+  const [activeTab, setActiveTab] = useState('analytics');
 
-  // Analytics state
   const [analytics, setAnalytics] = useState(null);
   const [loadingAnalytics, setLoadingAnalytics] = useState(true);
 
-  // Moderation Jobs state
   const [adminJobs, setAdminJobs] = useState([]);
   const [loadingJobs, setLoadingJobs] = useState(false);
   const [jobStatusFilter, setJobStatusFilter] = useState('all');
 
-  // Users Directory state
   const [adminUsers, setAdminUsers] = useState([]);
   const [loadingUsers, setLoadingUsers] = useState(false);
   const [userRoleFilter, setUserRoleFilter] = useState('all');
@@ -51,10 +48,10 @@ export const AdminDashboard = () => {
     }
   };
 
-  const fetchAdminJobs = async () => {
+  const fetchAdminJobs = async (status = jobStatusFilter) => {
     setLoadingJobs(true);
     try {
-      const data = await apiClient(`/admin/jobs?status=${jobStatusFilter}`);
+      const data = await apiClient(`/admin/jobs?status=${status}`);
       if (data.success) {
         setAdminJobs(data.jobs || []);
       }
@@ -65,10 +62,10 @@ export const AdminDashboard = () => {
     }
   };
 
-  const fetchAdminUsers = async () => {
+  const fetchAdminUsers = async (role = userRoleFilter) => {
     setLoadingUsers(true);
     try {
-      const data = await apiClient(`/admin/users?role=${userRoleFilter}`);
+      const data = await apiClient(`/admin/users?role=${role}`);
       if (data.success) {
         setAdminUsers(data.users || []);
       }
@@ -113,19 +110,18 @@ export const AdminDashboard = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2.5">
             <Shield className="h-6 w-6 text-brand-600" />
             Platform Administration
           </h1>
+
           <p className="mt-1 text-xs sm:text-sm text-slate-600">
             System governance, multi-tenant moderation, and aggregation metrics derived from MongoDB Atlas.
           </p>
         </div>
 
-        {/* Tab navigation */}
         <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl self-start sm:self-auto border border-slate-200">
           <button
             onClick={() => setActiveTab('analytics')}
@@ -138,6 +134,7 @@ export const AdminDashboard = () => {
             <BarChart3 className="h-3.5 w-3.5" />
             Analytics
           </button>
+
           <button
             onClick={() => setActiveTab('jobs')}
             className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 ${
@@ -149,6 +146,7 @@ export const AdminDashboard = () => {
             <Briefcase className="h-3.5 w-3.5" />
             Job Moderation
           </button>
+
           <button
             onClick={() => setActiveTab('users')}
             className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 ${
@@ -163,41 +161,49 @@ export const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* TAB 1: Analytics */}
       {activeTab === 'analytics' && (
         <div className="space-y-6">
           {loadingAnalytics ? (
             <div className="p-12 text-center text-xs text-slate-400">Loading platform metrics...</div>
           ) : analytics ? (
             <>
-              {/* Summary Metrics */}
+
               <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
                 <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
                   <span className="text-[11px] font-medium text-slate-500">Registered Users</span>
+
                   <p className="text-xl font-bold text-slate-900 mt-1">{analytics.summary.totalUsers}</p>
                 </div>
+
                 <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
                   <span className="text-[11px] font-medium text-slate-500">Total Jobs</span>
+
                   <p className="text-xl font-bold text-slate-900 mt-1">{analytics.summary.totalJobs}</p>
                 </div>
+
                 <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
                   <span className="text-[11px] font-medium text-slate-500">Active Postings</span>
+
                   <p className="text-xl font-bold text-emerald-600 mt-1">{analytics.summary.activeJobs}</p>
                 </div>
+
                 <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
                   <span className="text-[11px] font-medium text-slate-500">Applications Handled</span>
+
                   <p className="text-xl font-bold text-slate-900 mt-1">{analytics.summary.totalApplications}</p>
                 </div>
+
                 <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm col-span-2 lg:col-span-1">
                   <span className="text-[11px] font-medium text-slate-500">Placement Offer Rate</span>
+
                   <p className="text-xl font-bold text-brand-600 mt-1">{analytics.summary.placementRate}</p>
                 </div>
               </div>
 
-              {/* Aggregation Funnel */}
               <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-5">
                 <h3 className="text-sm font-semibold text-slate-900 flex items-center justify-between">
                   <span>Recruitment Funnel Pipeline (MongoDB Aggregation)</span>
+
                   <span className="text-[11px] font-normal text-slate-400">Total: {analytics.summary.totalApplications} candidacies</span>
                 </h3>
 
@@ -213,6 +219,7 @@ export const AdminDashboard = () => {
                     return (
                       <div key={stg.key} className={`p-4 rounded-xl border border-slate-200/80 ${stg.color}`}>
                         <span className="text-[11px] font-medium block">{stg.label}</span>
+
                         <p className="text-2xl font-bold mt-1">{count}</p>
                       </div>
                     );
@@ -220,16 +227,17 @@ export const AdminDashboard = () => {
                 </div>
               </div>
 
-              {/* Work Mode & User Roles Breakdown */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-3">
                   <h4 className="text-xs font-semibold text-slate-900 uppercase tracking-wider">
                     Work Mode Distribution
                   </h4>
+
                   <div className="space-y-2">
                     {analytics.workModes.map((wm) => (
                       <div key={wm.name} className="flex items-center justify-between text-xs py-1.5 border-b border-slate-100">
                         <span className="text-slate-700 font-medium">{wm.name} Openings</span>
+
                         <span className="font-semibold text-slate-900">{wm.value} jobs</span>
                       </div>
                     ))}
@@ -240,10 +248,12 @@ export const AdminDashboard = () => {
                   <h4 className="text-xs font-semibold text-slate-900 uppercase tracking-wider">
                     User Accounts by Role
                   </h4>
+
                   <div className="space-y-2">
                     {analytics.userRoles.map((ur) => (
                       <div key={ur.role} className="flex items-center justify-between text-xs py-1.5 border-b border-slate-100">
                         <span className="capitalize text-slate-700 font-medium">{ur.role}s</span>
+
                         <span className="font-semibold text-slate-900">{ur.count} accounts</span>
                       </div>
                     ))}
@@ -255,21 +265,24 @@ export const AdminDashboard = () => {
         </div>
       )}
 
-      {/* TAB 2: Job Moderation */}
       {activeTab === 'jobs' && (
         <div className="space-y-4">
           <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex items-center justify-between">
             <span className="text-xs font-semibold text-slate-700">Filter by Status:</span>
+
             <select
               value={jobStatusFilter}
               onChange={(e) => {
-                setJobStatusFilter(e.target.value);
-                fetchAdminJobs();
+                const newStatus = e.target.value;
+                setJobStatusFilter(newStatus);
+                fetchAdminJobs(newStatus);
               }}
               className="text-xs bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 focus-ring"
             >
               <option value="all">All Jobs ({adminJobs.length})</option>
+
               <option value="active">Active</option>
+
               <option value="closed">Closed</option>
             </select>
           </div>
@@ -280,24 +293,33 @@ export const AdminDashboard = () => {
                 <thead className="bg-slate-50/80 border-b border-slate-200 text-slate-600 font-semibold">
                   <tr>
                     <th className="px-6 py-3.5">Job Title</th>
+
                     <th className="px-6 py-3.5">Company / Recruiter</th>
+
                     <th className="px-6 py-3.5">Location</th>
+
                     <th className="px-6 py-3.5">Status</th>
+
                     <th className="px-6 py-3.5 text-right">Moderation Actions</th>
                   </tr>
                 </thead>
+
                 <tbody className="divide-y divide-slate-100">
                   {adminJobs.map((j) => (
                     <tr key={j._id} className="hover:bg-slate-50 transition-colors">
                       <td className="px-6 py-4 font-semibold text-slate-900">{j.title}</td>
+
                       <td className="px-6 py-4 text-slate-600">
                         {j.company?.name}
                         <p className="text-[11px] text-slate-400 font-normal">{j.recruiterId?.email}</p>
                       </td>
+
                       <td className="px-6 py-4 text-slate-600">{j.location}</td>
+
                       <td className="px-6 py-4">
                         <StatusBadge status={j.status} />
                       </td>
+
                       <td className="px-6 py-4 text-right">
                         <div className="flex items-center justify-end gap-2">
                           {j.status !== 'active' ? (
@@ -326,22 +348,26 @@ export const AdminDashboard = () => {
         </div>
       )}
 
-      {/* TAB 3: User Directory */}
       {activeTab === 'users' && (
         <div className="space-y-4">
           <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex items-center justify-between">
             <span className="text-xs font-semibold text-slate-700">Filter by Role:</span>
+
             <select
               value={userRoleFilter}
               onChange={(e) => {
-                setUserRoleFilter(e.target.value);
-                fetchAdminUsers();
+                const newRole = e.target.value;
+                setUserRoleFilter(newRole);
+                fetchAdminUsers(newRole);
               }}
               className="text-xs bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 focus-ring capitalize"
             >
               <option value="all">All Roles ({adminUsers.length})</option>
+
               <option value="candidate">Candidate</option>
+
               <option value="recruiter">Recruiter</option>
+
               <option value="admin">Admin</option>
             </select>
           </div>
@@ -352,18 +378,26 @@ export const AdminDashboard = () => {
                 <thead className="bg-slate-50/80 border-b border-slate-200 text-slate-600 font-semibold">
                   <tr>
                     <th className="px-6 py-3.5">User</th>
+
                     <th className="px-6 py-3.5">Email</th>
+
                     <th className="px-6 py-3.5">Assigned Role</th>
+
                     <th className="px-6 py-3.5">Account Status</th>
+
                     <th className="px-6 py-3.5 text-right">Actions</th>
                   </tr>
                 </thead>
+
                 <tbody className="divide-y divide-slate-100">
                   {adminUsers.map((u) => (
                     <tr key={u._id} className="hover:bg-slate-50 transition-colors">
                       <td className="px-6 py-4 font-semibold text-slate-900">{u.name}</td>
+
                       <td className="px-6 py-4 text-slate-600">{u.email}</td>
+
                       <td className="px-6 py-4 capitalize font-medium text-slate-700">{u.role}</td>
+
                       <td className="px-6 py-4">
                         <span
                           className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium border ${
@@ -375,6 +409,7 @@ export const AdminDashboard = () => {
                           {u.isActive ? 'Active' : 'Suspended'}
                         </span>
                       </td>
+
                       <td className="px-6 py-4 text-right">
                         <button
                           onClick={() => handleToggleUserStatus(u._id, u.isActive)}

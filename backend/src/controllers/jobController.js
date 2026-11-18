@@ -3,9 +3,6 @@ import { Application } from '../models/Application.js';
 import { CandidateProfile } from '../models/CandidateProfile.js';
 import { appEvents } from '../events/appEvents.js';
 
-// @desc    Get all jobs with faceted search & filtering
-// @route   GET /api/jobs
-// @access  Public
 export const getJobs = async (req, res, next) => {
   try {
     const {
@@ -27,15 +24,12 @@ export const getJobs = async (req, res, next) => {
 
     const query = {};
 
-    // Filter by recruiter if requested (for recruiter dashboard)
     if (recruiterId) {
       query.recruiterId = recruiterId;
     } else if (status !== 'all') {
-      // By default public view shows active jobs only
       query.status = status;
     }
 
-    // Keyword search (Title, Role, Description, or Company Name)
     if (q && q.trim()) {
       const regex = new RegExp(q.trim(), 'i');
       query.$or = [
@@ -47,22 +41,18 @@ export const getJobs = async (req, res, next) => {
       ];
     }
 
-    // Role filter
     if (role && role.trim()) {
       query.role = new RegExp(role.trim(), 'i');
     }
 
-    // Location filter
     if (location && location.trim()) {
       query.location = new RegExp(location.trim(), 'i');
     }
 
-    // Work Mode filter
     if (workMode && workMode !== 'All') {
       query.workMode = workMode;
     }
 
-    // Experience filter (minExp)
     if (minExp !== undefined && minExp !== '') {
       query.minExp = { $lte: Number(minExp) };
     }
@@ -70,7 +60,6 @@ export const getJobs = async (req, res, next) => {
       query.maxExp = { $gte: Number(maxExp) };
     }
 
-    // CTC Range filter
     if (ctcMin !== undefined && ctcMin !== '') {
       query['ctcRange.max'] = { ...(query['ctcRange.max'] || {}), $gte: Number(ctcMin) };
     }
@@ -78,7 +67,6 @@ export const getJobs = async (req, res, next) => {
       query['ctcRange.min'] = { ...(query['ctcRange.min'] || {}), $lte: Number(ctcMax) };
     }
 
-    // Skills filter (comma-separated or single)
     if (skills) {
       const skillsArray = typeof skills === 'string' ? skills.split(',').map((s) => s.trim()) : skills;
       if (skillsArray.length > 0) {
@@ -86,7 +74,6 @@ export const getJobs = async (req, res, next) => {
       }
     }
 
-    // Sorting
     let sortOption = { createdAt: -1 };
     if (sort === 'salary_high') {
       sortOption = { 'ctcRange.max': -1 };
@@ -120,9 +107,6 @@ export const getJobs = async (req, res, next) => {
   }
 };
 
-// @desc    Get single job by ID
-// @route   GET /api/jobs/:id
-// @access  Public
 export const getJobById = async (req, res, next) => {
   try {
     const job = await Job.findById(req.params.id).populate('recruiterId', 'name email company');
@@ -130,7 +114,6 @@ export const getJobById = async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'Job posting not found.' });
     }
 
-    // Check application count for this job
     const applicantsCount = await Application.countDocuments({ jobId: job._id });
 
     res.status(200).json({
@@ -145,9 +128,6 @@ export const getJobById = async (req, res, next) => {
   }
 };
 
-// @desc    Create new job posting
-// @route   POST /api/jobs
-// @access  Private (Recruiter only)
 export const createJob = async (req, res, next) => {
   try {
     const {
@@ -214,9 +194,6 @@ export const createJob = async (req, res, next) => {
   }
 };
 
-// @desc    Update job posting
-// @route   PATCH /api/jobs/:id
-// @access  Private (Recruiter owner or Admin)
 export const updateJob = async (req, res, next) => {
   try {
     const job = await Job.findById(req.params.id);
@@ -224,7 +201,6 @@ export const updateJob = async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'Job posting not found.' });
     }
 
-    // Ownership check
     if (req.user.role !== 'admin' && job.recruiterId.toString() !== req.user._id.toString()) {
       return res.status(403).json({
         success: false,
@@ -232,7 +208,6 @@ export const updateJob = async (req, res, next) => {
       });
     }
 
-    // Format array fields if sent as strings
     if (req.body.skills && typeof req.body.skills === 'string') {
       req.body.skills = req.body.skills.split(',').map((s) => s.trim());
     }
@@ -258,9 +233,6 @@ export const updateJob = async (req, res, next) => {
   }
 };
 
-// @desc    Close job posting
-// @route   PATCH /api/jobs/:id/close
-// @access  Private (Recruiter owner or Admin)
 export const closeJob = async (req, res, next) => {
   try {
     const job = await Job.findById(req.params.id);
@@ -294,9 +266,6 @@ export const closeJob = async (req, res, next) => {
   }
 };
 
-// @desc    Delete job posting
-// @route   DELETE /api/jobs/:id
-// @access  Private (Recruiter owner or Admin)
 export const deleteJob = async (req, res, next) => {
   try {
     const job = await Job.findById(req.params.id);
@@ -308,7 +277,6 @@ export const deleteJob = async (req, res, next) => {
       return res.status(403).json({ success: false, message: 'Forbidden: You can only delete jobs that you posted.' });
     }
 
-    // Cascade delete associated applications
     await Application.deleteMany({ jobId: job._id });
     await Job.findByIdAndDelete(job._id);
 
@@ -321,9 +289,6 @@ export const deleteJob = async (req, res, next) => {
   }
 };
 
-// @desc    Get applicants for a specific job
-// @route   GET /api/jobs/:id/applicants
-// @access  Private (Recruiter owner of that job or Admin)
 export const getJobApplicants = async (req, res, next) => {
   try {
     const job = await Job.findById(req.params.id);
@@ -331,7 +296,6 @@ export const getJobApplicants = async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'Job not found.' });
     }
 
-    // Enforce recruiter ownership check (placement interview angle: preventing IDOR)
     if (req.user.role !== 'admin' && job.recruiterId.toString() !== req.user._id.toString()) {
       return res.status(403).json({
         success: false,
@@ -343,7 +307,6 @@ export const getJobApplicants = async (req, res, next) => {
       .populate('candidateId', 'name email createdAt')
       .sort({ createdAt: -1 });
 
-    // Fetch candidate profiles to attach skills, headline, experience
     const candidateIds = applications.map((app) => app.candidateId?._id).filter(Boolean);
     const profiles = await CandidateProfile.find({ userId: { $in: candidateIds } });
     const profileMap = {};

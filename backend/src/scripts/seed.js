@@ -26,7 +26,6 @@ const seedDatabase = async () => {
     await Job.deleteMany({});
     await Application.deleteMany({});
 
-    // Ensure sample resume file exists in uploads
     const sampleResumeName = 'resume-david-chen-sample.pdf';
     const sampleResumePath = path.join(UPLOAD_PATH, sampleResumeName);
     if (!fs.existsSync(sampleResumePath)) {
@@ -36,7 +35,6 @@ const seedDatabase = async () => {
     console.log('[Seed] Creating demo users with hashed passwords...');
     const defaultPassword = await User.hashPassword('Password123!');
 
-    // 1. Admin User
     const adminUser = await User.create({
       name: 'Alex Vance (Platform Admin)',
       email: 'alex.admin@candidex.demo',
@@ -44,7 +42,6 @@ const seedDatabase = async () => {
       role: 'admin',
     });
 
-    // 2. Recruiters
     const recruiter1 = await User.create({
       name: 'Sarah Jenkins',
       email: 'sarah.recruiter@stripe.demo',
@@ -73,7 +70,6 @@ const seedDatabase = async () => {
       },
     });
 
-    // 3. Candidates
     const candidate1 = await User.create({
       name: 'David Chen',
       email: 'david.candidate@gmail.demo',
@@ -325,7 +321,7 @@ const seedDatabase = async () => {
     ]);
 
     console.log('[Seed] Creating demo applications across pipeline stages...');
-    // David Chen -> Senior Full-Stack Engineer (Stage: Interview)
+
     await Application.create({
       jobId: jobs[0]._id,
       candidateId: candidate1._id,
@@ -363,7 +359,6 @@ const seedDatabase = async () => {
       ],
     });
 
-    // David Chen -> Frontend Product Engineer (Stage: Offered)
     await Application.create({
       jobId: jobs[2]._id,
       candidateId: candidate1._id,
@@ -387,7 +382,6 @@ const seedDatabase = async () => {
       ],
     });
 
-    // Priya Sharma -> Backend Platform Engineer (Stage: Shortlisted)
     await Application.create({
       jobId: jobs[1]._id,
       candidateId: candidate2._id,
@@ -401,7 +395,6 @@ const seedDatabase = async () => {
       ],
     });
 
-    // Priya Sharma -> DevOps Specialist (Stage: Applied)
     await Application.create({
       jobId: jobs[3]._id,
       candidateId: candidate2._id,
@@ -414,7 +407,6 @@ const seedDatabase = async () => {
       ],
     });
 
-    // Bookmark saved job for candidate 1
     candidate1.savedJobs.push(jobs[1]._id);
     await candidate1.save();
 

@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { Navbar } from './components/common/Navbar';
 
-// Page Imports
 import { JobSearchPage } from './pages/candidate/JobSearchPage';
 import { MyApplicationsPage } from './pages/candidate/MyApplicationsPage';
 import { ProfilePage } from './pages/candidate/ProfilePage';
@@ -17,7 +16,6 @@ import { AdminDashboard } from './pages/admin/AdminDashboard';
 import { LoginPage } from './pages/auth/LoginPage';
 import { RegisterPage } from './pages/auth/RegisterPage';
 
-// Protected Route Guard
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { user, loading } = useAuth();
 
@@ -34,7 +32,6 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   }
 
   if (allowedRoles && !allowedRoles.includes(user.role)) {
-    // If unauthorized for this specific role, redirect to appropriate home
     if (user.role === 'recruiter') return <Navigate to="/recruiter/dashboard" replace />;
     if (user.role === 'admin') return <Navigate to="/admin/analytics" replace />;
     return <Navigate to="/jobs" replace />;
@@ -43,7 +40,6 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   return children;
 };
 
-// Root Redirect Helper
 const HomeRedirect = () => {
   const { user, loading } = useAuth();
   if (loading) return null;
@@ -60,13 +56,10 @@ export const App = () => {
           <Navbar />
           <main className="flex-1">
             <Routes>
-              {/* Root */}
               <Route path="/" element={<HomeRedirect />} />
 
-              {/* Public & Candidate Job Search */}
               <Route path="/jobs" element={<JobSearchPage />} />
 
-              {/* Candidate Protected Routes */}
               <Route
                 path="/applications"
                 element={
@@ -92,7 +85,6 @@ export const App = () => {
                 }
               />
 
-              {/* Recruiter Protected Routes */}
               <Route
                 path="/recruiter/dashboard"
                 element={
@@ -118,7 +110,6 @@ export const App = () => {
                 }
               />
 
-              {/* Admin Protected Routes */}
               <Route
                 path="/admin/analytics"
                 element={
@@ -144,11 +135,9 @@ export const App = () => {
                 }
               />
 
-              {/* Auth Routes */}
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
 
-              {/* Catch-all */}
               <Route path="*" element={<Navigate to="/jobs" replace />} />
             </Routes>
           </main>

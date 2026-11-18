@@ -42,18 +42,20 @@ export const Navbar = () => {
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
-      {/* Top Demo Bar for Reviewers */}
       <div className="bg-slate-900 text-slate-300 text-xs px-4 py-1.5 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-brand-600/30 text-brand-300 text-[11px] font-medium border border-brand-500/40">
             Interactive Multi-Role ATS
           </span>
+
           <span className="hidden sm:inline text-slate-400">
             Current Persona: <strong className="text-white capitalize">{user?.role || 'Guest'}</strong> ({user?.name || 'Not signed in'})
           </span>
         </div>
+
         <div className="flex items-center gap-2">
           <span className="hidden md:inline text-slate-400">Instant Demo Switch:</span>
+
           <button
             onClick={() => handleDemoSwitch('candidate')}
             className={`px-2 py-0.5 rounded text-[11px] font-medium transition-colors ${
@@ -62,6 +64,7 @@ export const Navbar = () => {
           >
             Candidate (David)
           </button>
+
           <button
             onClick={() => handleDemoSwitch('recruiter')}
             className={`px-2 py-0.5 rounded text-[11px] font-medium transition-colors ${
@@ -70,6 +73,7 @@ export const Navbar = () => {
           >
             Recruiter (Sarah)
           </button>
+
           <button
             onClick={() => handleDemoSwitch('admin')}
             className={`px-2 py-0.5 rounded text-[11px] font-medium transition-colors ${
@@ -81,18 +85,14 @@ export const Navbar = () => {
         </div>
       </div>
 
-      {/* Main Navbar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
-          {/* Logo & Brand */}
           <div className="flex items-center gap-8">
             <Link to="/" className="flex items-center group">
               <CandidexLogo size="md" />
             </Link>
 
-            {/* Desktop Navigation Links */}
             <nav className="hidden md:flex items-center gap-1">
-              {/* Candidate Links */}
               {(!user || user.role === 'candidate') && (
                 <>
                   <Link
@@ -120,6 +120,7 @@ export const Navbar = () => {
                         <FileText className="h-4 w-4" />
                         My Applications
                       </Link>
+
                       <Link
                         to="/saved-jobs"
                         className={`inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
@@ -131,6 +132,7 @@ export const Navbar = () => {
                         <Bookmark className="h-4 w-4" />
                         Saved
                       </Link>
+
                       <Link
                         to="/profile"
                         className={`inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
@@ -147,7 +149,6 @@ export const Navbar = () => {
                 </>
               )}
 
-              {/* Recruiter Links */}
               {user?.role === 'recruiter' && (
                 <>
                   <Link
@@ -161,6 +162,7 @@ export const Navbar = () => {
                     <LayoutDashboard className="h-4 w-4" />
                     Overview
                   </Link>
+
                   <Link
                     to="/recruiter/jobs"
                     className={`inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
@@ -172,6 +174,7 @@ export const Navbar = () => {
                     <Briefcase className="h-4 w-4" />
                     Manage Jobs
                   </Link>
+
                   <Link
                     to="/recruiter/applicants"
                     className={`inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
@@ -183,6 +186,7 @@ export const Navbar = () => {
                     <Users className="h-4 w-4" />
                     Applicant Pipeline
                   </Link>
+
                   <Link
                     to="/jobs"
                     className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium text-slate-500 hover:text-slate-800"
@@ -192,7 +196,6 @@ export const Navbar = () => {
                 </>
               )}
 
-              {/* Admin Links */}
               {user?.role === 'admin' && (
                 <>
                   <Link
@@ -206,6 +209,7 @@ export const Navbar = () => {
                     <LayoutDashboard className="h-4 w-4" />
                     Platform Analytics
                   </Link>
+
                   <Link
                     to="/admin/jobs"
                     className={`inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
@@ -217,6 +221,7 @@ export const Navbar = () => {
                     <Briefcase className="h-4 w-4" />
                     Job Moderation
                   </Link>
+
                   <Link
                     to="/admin/users"
                     className={`inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
@@ -233,7 +238,6 @@ export const Navbar = () => {
             </nav>
           </div>
 
-          {/* Right Action Buttons / User Menu */}
           <div className="flex items-center gap-3">
             {user ? (
               <div className="relative">
@@ -244,10 +248,13 @@ export const Navbar = () => {
                   <div className="h-8 w-8 rounded-full bg-slate-100 border border-slate-200 text-brand-700 font-semibold flex items-center justify-center text-xs">
                     {user.name.charAt(0).toUpperCase()}
                   </div>
+
                   <div className="hidden sm:block text-left pr-1">
                     <p className="text-xs font-semibold text-slate-800 leading-tight">{user.name}</p>
+
                     <p className="text-[11px] text-slate-500 capitalize">{user.role}</p>
                   </div>
+
                   <ChevronDown className="h-4 w-4 text-slate-400" />
                 </button>
 
@@ -255,7 +262,9 @@ export const Navbar = () => {
                   <div className="absolute right-0 mt-2 w-56 rounded-lg bg-white py-1 shadow-lg border border-slate-200 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
                     <div className="px-4 py-2 border-b border-slate-100">
                       <p className="text-xs font-semibold text-slate-800">{user.name}</p>
+
                       <p className="text-xs text-slate-500 truncate">{user.email}</p>
+
                       <span className="inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-700 capitalize">
                         {user.role} workspace
                       </span>
@@ -294,6 +303,7 @@ export const Navbar = () => {
                 >
                   Sign In
                 </Link>
+
                 <Link
                   to="/register"
                   className="px-3.5 py-1.5 text-xs font-medium text-white bg-brand-600 hover:bg-brand-700 rounded-lg shadow-sm transition-colors"
@@ -303,7 +313,6 @@ export const Navbar = () => {
               </div>
             )}
 
-            {/* Mobile Hamburger Button */}
             <div className="flex items-center md:hidden">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -316,7 +325,6 @@ export const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-slate-200 bg-white px-4 pt-2 pb-4 space-y-1">
           {(!user || user.role === 'candidate') && (
@@ -328,6 +336,7 @@ export const Navbar = () => {
               >
                 Find Jobs
               </Link>
+
               {user && (
                 <>
                   <Link
@@ -337,6 +346,7 @@ export const Navbar = () => {
                   >
                     My Applications
                   </Link>
+
                   <Link
                     to="/saved-jobs"
                     onClick={() => setMobileMenuOpen(false)}
@@ -344,6 +354,7 @@ export const Navbar = () => {
                   >
                     Saved Jobs
                   </Link>
+
                   <Link
                     to="/profile"
                     onClick={() => setMobileMenuOpen(false)}
@@ -365,6 +376,7 @@ export const Navbar = () => {
               >
                 Recruiter Dashboard
               </Link>
+
               <Link
                 to="/recruiter/jobs"
                 onClick={() => setMobileMenuOpen(false)}
@@ -372,6 +384,7 @@ export const Navbar = () => {
               >
                 Manage Job Postings
               </Link>
+
               <Link
                 to="/recruiter/applicants"
                 onClick={() => setMobileMenuOpen(false)}
@@ -391,6 +404,7 @@ export const Navbar = () => {
               >
                 Platform Analytics
               </Link>
+
               <Link
                 to="/admin/jobs"
                 onClick={() => setMobileMenuOpen(false)}
@@ -398,6 +412,7 @@ export const Navbar = () => {
               >
                 Job Moderation
               </Link>
+
               <Link
                 to="/admin/users"
                 onClick={() => setMobileMenuOpen(false)}

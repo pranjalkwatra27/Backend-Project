@@ -15,7 +15,6 @@ import { validate } from '../middleware/validatorMiddleware.js';
 
 const router = express.Router();
 
-// Validation chains for job creation
 const createJobValidation = [
   body('title').trim().notEmpty().withMessage('Job title is required'),
   body('role').trim().notEmpty().withMessage('Role/designation is required'),
@@ -26,11 +25,9 @@ const createJobValidation = [
   validate,
 ];
 
-// Public routes
 router.get('/', getJobs);
 router.get('/:id', getJobById);
 
-// Recruiter / Admin protected routes
 router.post('/', protect, authorizeRoles('recruiter', 'admin'), createJobValidation, createJob);
 router.patch('/:id', protect, authorizeRoles('recruiter', 'admin'), updateJob);
 router.patch('/:id/close', protect, authorizeRoles('recruiter', 'admin'), closeJob);

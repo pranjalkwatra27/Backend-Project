@@ -25,6 +25,7 @@ export const StageBadge = ({ stage }) => {
       className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${currentStyle}`}
     >
       <span className="w-1.5 h-1.5 rounded-full mr-1.5 bg-current opacity-70"></span>
+
       {currentLabel}
     </span>
   );
